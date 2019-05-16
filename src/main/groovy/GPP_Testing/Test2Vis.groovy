@@ -52,9 +52,9 @@ def logVis = new LoggingVisualiser ( logInput: logChan.in(),
 new Thread() {
 	@Override
 	public void run() {
-		Visualiser.main();
+		Visualiser.main() 
 	}
-}.start();
+}.start() 
  
 
 //NETWORK
@@ -71,7 +71,7 @@ def emitter = new Emit(
     logPropertyName: "instanceNumber" )
 
     //gppVis command
-    Visualiser.hb.getChildren().add(Visualiser.p.addWorker("emit"));
+    Visualiser.hb.getChildren().add(Visualiser.p.addWorker("emit")) 
  
 def combiner = new CombineNto1(
     input: chan1.in(),
@@ -84,7 +84,7 @@ def combiner = new CombineNto1(
     logPhaseName: "combine")
 
     //gppVis command
-    Visualiser.hb.getChildren().add(Visualiser.p.addWorker("combine"));
+    Visualiser.hb.getChildren().add(Visualiser.p.addWorker("combine")) 
  
 def worker = new Worker(
     input: chan2.in(),
@@ -94,7 +94,7 @@ def worker = new Worker(
     logPropertyName: "instanceNumber")
 
     //gppVis command
-    Visualiser.hb.getChildren().add(Visualiser.p.addWorker("work"));
+    Visualiser.hb.getChildren().add(Visualiser.p.addWorker("work")) 
  
 def collector = new Collect(
     input: chan3.in(),
@@ -105,7 +105,7 @@ def collector = new Collect(
     logPropertyName: "instanceNumber")
 
     //gppVis command
-    Visualiser.hb.getChildren().add(Visualiser.p.addWorker("collect"));
+    Visualiser.hb.getChildren().add(Visualiser.p.addWorker("collect")) 
 
 //gppVis command
 //short delay to give JavaFx time to start up.
@@ -115,10 +115,10 @@ Platform.runLater(new Runnable() {
 	void run() {
 		Visualiser.networkScene()
 	}
-});
+}) 
 
 //short delay to give JavaFx time to display.
-sleep(3000);
+sleep(3000) 
 
 PAR network = new PAR()
  network = new PAR([logVis, emitter , combiner , worker , collector ])
@@ -134,7 +134,7 @@ Platform.runLater(new Runnable() {
 	void run() {
 		Visualiser.readLog("./Test2-log.csv")
 	}
-});
+}) 
  
  
  
