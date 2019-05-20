@@ -3,10 +3,11 @@ package GPP_Testing
 import GPP_Library.CompositeDetails
 import GPP_Library.DataDetails
 import GPP_Library.ResultDetails
-import GPP_Library.connectors.reducers.AnyFanOne
-import GPP_Library.connectors.spreaders.OneFanAny
-import GPP_Library.functionals.composites.AnyGroupOfPipelineCollects
-import GPP_Library.functionals.composites.AnyGroupOfPipelines
+import GPP_Library.connectors.reducers.ListFanOne
+import GPP_Library.connectors.spreaders.OneFanList
+import GPP_Library.functionals.composites.AnyPipelineOfGroupCollects
+import GPP_Library.functionals.composites.ListPipelineOfGroupCollects
+import GPP_Library.functionals.composites.ListPipelineOfGroups
 import GPP_Library.terminals.Collect
 import GPP_Library.terminals.Emit
 import TestDataDefs.TestData
@@ -18,8 +19,7 @@ import static org.junit.Assert.assertTrue
 int stages = 3
 int workers = 3
 def er = new TestExtract()
-
-def emitterDetails = new DataDetails(dName: TestData.getName() ,
+def emitterDetails = new DataDetails(dName: TestData.getName(),
     dInitMethod: TestData.totalInitialise,
     dInitData: [20],
     dCreateMethod: TestData.create)
@@ -32,7 +32,7 @@ def resultDetails =
         rFinaliseData: [er])
 
 
-List [][] initData = new List[workers][stages]
+List[][] initData = new List[workers][stages]
 initData[0][0] = [100, 0]
 initData[1][0] = [100, 0]
 initData[2][0] = [100, 0]
@@ -51,46 +51,51 @@ String finaliseMethod = TestWorker.finalise
 List finalData = null
 
 CompositeDetails compDetails = new CompositeDetails(workers, stages)
-for ( w in 0..< workers)
-  for ( s in 0 ..< stages)
-    compDetails.insertCompositeDetails( w,
-        s,
-        wName,
-        initMethod,
-        initData[w][s],
-        finaliseMethod,
-        finalData)
+for (w in 0..<workers) for (s in 0..<stages) compDetails.insertCompositeDetails(w,
+    s,
+    wName,
+    initMethod,
+    initData[w][s],
+    finaliseMethod,
+    finalData)
 
-//        println "Result is ${compDetails.toString()}"
+//println "${compDetails.toString()}"
 
 def stageOps = [TestData.func1, TestData.func2, TestData.func3]
 
 def pipeModifiers = [[[0], [0], [0]], [[0], [0], [0]], [[0], [0], [0]]]
 
+//@log 1 "./Test34-"
+
 def emitter = new Emit(
-    eDetails: emitterDetails )
+    eDetails: emitterDetails,
+    logPhaseName: "emit",
+    logPropertyName: "instanceNumber")
 
-def ofa = new OneFanAny(
-    destinations: workers)
+def ofl = new OneFanList( )
 
-def gop = new AnyGroupOfPipelines(groups: workers,
+
+def pog = new ListPipelineOfGroups(workers: workers,
     stages: stages,
     cDetails: compDetails,
     stageOp: stageOps,
-    stageModifier : pipeModifiers)
+    stageModifier: pipeModifiers,
+    logPropertyName: "instanceNumber" ,
+    logPhaseNames: ["stage1", "stage2", "stage3"] )
 
-def afo = new AnyFanOne (
-    sources: workers)
+def lfo = new ListFanOne()
 
 def collector = new Collect(
-    rDetails: resultDetails)
+    rDetails: resultDetails,
+    logPhaseName: "collect",
+    logPropertyName: "instanceNumber")
 
-println "32: $er"
+println "34: $er"
 
-assertTrue (er.finalSum == 210)
-assertTrue (er.dataSetCount == 20)
-assertTrue (er.finalInstance == 20)
-assertTrue (er.maxClone == 0)
-assertTrue (er.w1 == 210)
-assertTrue (er.w2 == 210)
-assertTrue (er.w3 == 210)
+assertTrue(er.finalSum == 210)
+assertTrue(er.dataSetCount == 20)
+assertTrue(er.finalInstance == 20)
+assertTrue(er.maxClone == 0)
+assertTrue(er.w1 == 210)
+assertTrue(er.w2 == 210)
+assertTrue(er.w3 == 210)

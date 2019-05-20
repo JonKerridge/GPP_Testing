@@ -3,19 +3,19 @@ package GPP_Testing
 import GPP_Library.DataDetails
 import GPP_Library.ResultDetails
 import GPP_Library.functionals.workers.Worker
-import GPP_Library.terminals.Collect
-import GPP_Library.terminals.Emit
-import TestDataDefs.TestData
-import TestDataDefs.TestExtract
-import TestDataDefs.TestResult
+import GPP_Library.terminals.*
 import static org.junit.Assert.assertTrue
+import TestDataDefs.*
 
 def er = new TestExtract()
 
 def emitterDetails = new DataDetails(dName: TestData.getName() ,
     dInitMethod: TestData.totalInitialise,
     dInitData: [20],
-    dCreateMethod: TestData.create)
+    dCreateMethod: TestData.createFromLocal,
+    lName: TestWorker.getName(),
+    lInitMethod: TestWorker.init,
+    lInitData: [25, 100])
 
 def resultDetails = new ResultDetails(rName: TestResult.getName(),
     rInitMethod: TestResult.init,
@@ -24,7 +24,7 @@ def resultDetails = new ResultDetails(rName: TestResult.getName(),
     rFinaliseData: [er])
 
 
-def emitter = new Emit(
+def emitter = new EmitWithLocal(
     eDetails: emitterDetails )
 
 def worker = new Worker(
@@ -33,9 +33,8 @@ def worker = new Worker(
 def collector = new Collect(
     rDetails: resultDetails)
 
+println "5: $er"
 
-println "1: $er"
-
-assertTrue (er.finalSum == 210)
+assertTrue (er.finalSum == 2210)
 assertTrue (er.dataSetCount == 20)
 assertTrue (er.finalInstance == 20)

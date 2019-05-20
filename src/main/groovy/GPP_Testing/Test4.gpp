@@ -1,13 +1,12 @@
 package GPP_Testing
 
 import GPP_Library.DataDetails
+import GPP_Library.LocalDetails
 import GPP_Library.ResultDetails
-import GPP_Library.functionals.workers.Worker
-import GPP_Library.terminals.Collect
-import GPP_Library.terminals.Emit
-import TestDataDefs.TestData
-import TestDataDefs.TestExtract
-import TestDataDefs.TestResult
+import GPP_Library.functionals.workers.ThreePhaseWorker
+import GPP_Library.terminals.*
+import groovyJCSP.*
+import TestDataDefs.*
 import static org.junit.Assert.assertTrue
 
 def er = new TestExtract()
@@ -23,19 +22,25 @@ def resultDetails = new ResultDetails(rName: TestResult.getName(),
     rFinaliseMethod: TestResult.finalise,
     rFinaliseData: [er])
 
+def tpwLocal = new LocalDetails(lName: TPWdata.getName(),
+    lInitMethod: TPWdata.initMethod,
+    lInitData: [2])
+
 
 def emitter = new Emit(
     eDetails: emitterDetails )
 
-def worker = new Worker(
-    function: TestData.nullFunc)
+def worker = new ThreePhaseWorker(
+    lDetails: tpwLocal,
+    inputMethod: TPWdata.inputMethod,
+    workMethod: TPWdata.workMethod,
+    outFunction: TPWdata.outFunction)
 
 def collector = new Collect(
     rDetails: resultDetails)
 
+println "4: $er"
 
-println "1: $er"
-
-assertTrue (er.finalSum == 210)
-assertTrue (er.dataSetCount == 20)
-assertTrue (er.finalInstance == 20)
+assertTrue (er.finalSum == 840)
+assertTrue (er.dataSetCount == 2)
+assertTrue (er.finalInstance == 2)

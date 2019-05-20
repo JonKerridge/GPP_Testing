@@ -1,0 +1,58 @@
+package GPP_Testing
+
+import GPP_Library.DataDetails
+import GPP_Library.LocalDetails
+import GPP_Library.ResultDetails
+import GPP_Library.functionals.transformers.CombineNto1
+import GPP_Library.functionals.workers.Worker
+import GPP_Library.terminals.*
+import static org.junit.Assert.assertTrue
+
+import TestDataDefs.*
+def er = new TestExtract()
+
+def emitterDetails = new DataDetails(dName: TestData.getName() ,
+    dInitMethod: TestData.totalInitialise,
+    dInitData: [20],
+    dCreateMethod: TestData.create)
+
+def resultDetails = new ResultDetails(rName: TestResult.getName(),
+    rInitMethod: TestResult.init,
+    rCollectMethod:  TestResult.collector,
+    rFinaliseMethod: TestResult.finalise,
+    rFinaliseData: [er])
+
+def localData = new LocalDetails( lName: TestData.getName(),
+    lInitMethod: TestData.partialInitialise)
+
+def outData = new LocalDetails( lName: TestData.getName(),
+    lInitMethod: TestData.partialInitialise,
+    lFinaliseMethod: TestData.finaliseMethod)
+
+def emit2Details = new LocalDetails(lName: TestData.getName(),
+    lInitMethod: TestData.totalInitialise,
+    lInitData: [5],
+    lCreateMethod: TestData.createFromInput)
+
+def emitter = new Emit(
+    eDetails: emitterDetails )
+
+def combiner = new CombineNto1(
+    localDetails: localData,
+    outDetails: outData,
+    combineMethod: CombineData.combineMethod)
+
+def emit2 = new EmitFromInput(
+    eDetails: emit2Details)
+
+def worker = new Worker(
+    function: TestData.nullFunc)
+
+def collector = new Collect(
+    rDetails: resultDetails)
+
+println "3: $er"
+
+assertTrue (er.finalSum == 1050)
+assertTrue (er.dataSetCount == 5)
+assertTrue (er.finalInstance == 5)

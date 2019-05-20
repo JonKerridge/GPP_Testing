@@ -101,6 +101,7 @@ er.w1 = er1.w1 + er2.w1 + er3.w1
 er.w2 = er1.w2 + er2.w2 + er3.w2
 er.w3 = er1.w3 + er2.w3 + er3.w3
 er.cloneOrder = er1.cloneOrder + er2.cloneOrder + er3.cloneOrder
+er.instanceOrder = er1.instanceOrder + er2.instanceOrder + er3.instanceOrder
 
 println "28: $er"
 

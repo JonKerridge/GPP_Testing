@@ -3,10 +3,10 @@ package GPP_Testing
 import GPP_Library.CompositeDetails
 import GPP_Library.DataDetails
 import GPP_Library.ResultDetails
-import GPP_Library.connectors.reducers.ListFanOne
-import GPP_Library.connectors.spreaders.OneFanList
-import GPP_Library.functionals.composites.ListGroupOfPipelineCollects
-import GPP_Library.functionals.composites.ListGroupOfPipelines
+import GPP_Library.connectors.reducers.AnyFanOne
+import GPP_Library.connectors.spreaders.OneFanAny
+import GPP_Library.functionals.composites.AnyGroupOfPipelineCollects
+import GPP_Library.functionals.composites.AnyGroupOfPipelines
 import GPP_Library.terminals.Collect
 import GPP_Library.terminals.Emit
 import TestDataDefs.TestData
@@ -18,38 +18,18 @@ import static org.junit.Assert.assertTrue
 int stages = 3
 int workers = 3
 def er = new TestExtract()
-def er1 = new TestExtract()
-def er2 = new TestExtract()
-def er3 = new TestExtract()
 
 def emitterDetails = new DataDetails(dName: TestData.getName() ,
     dInitMethod: TestData.totalInitialise,
     dInitData: [20],
     dCreateMethod: TestData.create)
 
-List resultDetails = []
-
-resultDetails <<
+def resultDetails =
     new ResultDetails(rName: TestResult.getName(),
         rInitMethod: TestResult.init,
-        rCollectMethod:  TestResult.collector,
+        rCollectMethod: TestResult.collector,
         rFinaliseMethod: TestResult.finalise,
-        rFinaliseData: [er1])
-
-resultDetails <<
-    new ResultDetails(rName: TestResult.getName(),
-        rInitMethod: TestResult.init,
-        rCollectMethod:  TestResult.collector,
-        rFinaliseMethod: TestResult.finalise,
-        rFinaliseData: [er2])
-
-resultDetails <<
-    new ResultDetails(rName: TestResult.getName(),
-        rInitMethod: TestResult.init,
-        rCollectMethod:  TestResult.collector,
-        rFinaliseMethod: TestResult.finalise,
-        rFinaliseData: [er3])
-
+        rFinaliseData: [er])
 
 
 List [][] initData = new List[workers][stages]
@@ -81,36 +61,39 @@ for ( w in 0..< workers)
         finaliseMethod,
         finalData)
 
-//println "${compDetails.toString()}"
+//        println "Result is ${compDetails.toString()}"
 
 def stageOps = [TestData.func1, TestData.func2, TestData.func3]
 
 def pipeModifiers = [[[0], [0], [0]], [[0], [0], [0]], [[0], [0], [0]]]
 
+//@log 1 "./Test32-"
+
 def emitter = new Emit(
-    eDetails: emitterDetails )
+    eDetails: emitterDetails,
+    logPhaseName: "emit",
+    logPropertyName: "instanceNumber" )
 
-def ofl = new OneFanList()
+def ofa = new OneFanAny(
+    destinations: workers)
 
-def gop = new ListGroupOfPipelineCollects( groups: workers,
+def gop = new AnyGroupOfPipelines(groups: workers,
     stages: stages,
     cDetails: compDetails,
-    rDetails: resultDetails,
     stageOp: stageOps,
-    stageModifier : pipeModifiers)
+    stageModifier : pipeModifiers,
+    logPropertyName: "instanceNumber" ,
+    logPhaseNames: ["stage1", "stage2", "stage3"])
 
-er.finalSum = er1.finalSum + er2.finalSum + er3.finalSum
-er.dataSetCount = er1.dataSetCount + er2.dataSetCount + er3.dataSetCount
-er.finalInstance = Math.max(er1.finalInstance, er2.finalInstance)
-er.finalInstance = Math.max(er.finalInstance, er3.finalInstance)
-er.maxClone = Math.max(er1.maxClone, er2.maxClone)
-er.maxClone = Math.max(er.maxClone, er3.maxClone)
-er.w1 = er1.w1 + er2.w1 + er3.w1
-er.w2 = er1.w2 + er2.w2 + er3.w2
-er.w3 = er1.w3 + er2.w3 + er3.w3
-er.cloneOrder = er1.cloneOrder + er2.cloneOrder +er3.cloneOrder
-er.instanceOrder = er1.instanceOrder + er2.instanceOrder + er3.instanceOrder
-println "33: $er"
+def afo = new AnyFanOne (
+    sources: workers)
+
+def collector = new Collect(
+    rDetails: resultDetails,
+    logPhaseName:  "collect",
+    logPropertyName: "instanceNumber")
+
+println "32: $er"
 
 assertTrue (er.finalSum == 210)
 assertTrue (er.dataSetCount == 20)

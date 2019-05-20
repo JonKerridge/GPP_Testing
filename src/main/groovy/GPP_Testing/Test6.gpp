@@ -2,13 +2,15 @@ package GPP_Testing
 
 import GPP_Library.DataDetails
 import GPP_Library.ResultDetails
-import GPP_Library.functionals.workers.Worker
-import GPP_Library.terminals.Collect
-import GPP_Library.terminals.Emit
-import TestDataDefs.TestData
-import TestDataDefs.TestExtract
-import TestDataDefs.TestResult
+import GPP_Library.connectors.reducers.AnyFanOne
+import GPP_Library.connectors.spreaders.OneFanAny
+import GPP_Library.functionals.groups.AnyGroupAny
+import GPP_Library.terminals.*
 import static org.junit.Assert.assertTrue
+import TestDataDefs.*
+
+def destinations = 3
+def sources = 3
 
 def er = new TestExtract()
 
@@ -23,18 +25,24 @@ def resultDetails = new ResultDetails(rName: TestResult.getName(),
     rFinaliseMethod: TestResult.finalise,
     rFinaliseData: [er])
 
-
 def emitter = new Emit(
     eDetails: emitterDetails )
 
-def worker = new Worker(
-    function: TestData.nullFunc)
+def outFan = new OneFanAny (
+    destinations: destinations)
+
+def aga = new AnyGroupAny (
+    workers: destinations,
+    function: TestData.nullFunc
+)
+
+def inFan = new AnyFanOne(
+    sources: sources)
 
 def collector = new Collect(
     rDetails: resultDetails)
 
-
-println "1: $er"
+println "6: $er"
 
 assertTrue (er.finalSum == 210)
 assertTrue (er.dataSetCount == 20)

@@ -12,6 +12,7 @@ class TestResult extends DataClass {
     int w2 = 0
     int w3 = 0
     List cloneOrder = []
+    List instanceOrder = []
 
     static String init = "initClass"
     static String collector = "collector"
@@ -25,9 +26,10 @@ class TestResult extends DataClass {
         sum += d.data
         finalInstance = d.instanceNumber > finalInstance ? d.instanceNumber : finalInstance
         dataSets += 1
+        instanceOrder.add(d.instanceNumber)
+        cloneOrder.add(d.cloneNumber)
         if ( d.cloneNumber > maxCloneNumber) {
             maxCloneNumber = d.cloneNumber
-            cloneOrder.add(d.cloneNumber)
         }
         w1 += d.w1
         w2 += d.w2
@@ -44,6 +46,7 @@ class TestResult extends DataClass {
         er.w2 = w2
         er.w3 = w3
         er.cloneOrder = cloneOrder
+        er.instanceOrder = instanceOrder
         //println "Final sum = $sum from $dataSets dataSets with final instance $finalInstance and maxClone = $maxCloneNumber"
         //println "Worker out values "
         return completedOK

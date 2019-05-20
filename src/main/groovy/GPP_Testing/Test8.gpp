@@ -2,13 +2,12 @@ package GPP_Testing
 
 import GPP_Library.DataDetails
 import GPP_Library.ResultDetails
-import GPP_Library.functionals.workers.Worker
-import GPP_Library.terminals.Collect
-import GPP_Library.terminals.Emit
-import TestDataDefs.TestData
-import TestDataDefs.TestExtract
-import TestDataDefs.TestResult
+import GPP_Library.connectors.reducers.ListFanOne
+import GPP_Library.connectors.spreaders.OneFanList
+import GPP_Library.functionals.groups.ListGroupList
+import GPP_Library.terminals.*
 import static org.junit.Assert.assertTrue
+import TestDataDefs.*
 
 def er = new TestExtract()
 
@@ -23,19 +22,24 @@ def resultDetails = new ResultDetails(rName: TestResult.getName(),
     rFinaliseMethod: TestResult.finalise,
     rFinaliseData: [er])
 
-
 def emitter = new Emit(
     eDetails: emitterDetails )
 
-def worker = new Worker(
-    function: TestData.nullFunc)
+def outFan = new OneFanList ()
+
+def lgl = new ListGroupList(
+    workers: 4,
+    function: TestData.nullFunc
+)
+
+def inFan = new ListFanOne( )
 
 def collector = new Collect(
     rDetails: resultDetails)
 
-
-println "1: $er"
+println "8: $er"
 
 assertTrue (er.finalSum == 210)
 assertTrue (er.dataSetCount == 20)
 assertTrue (er.finalInstance == 20)
+assertTrue (er.maxClone == 0)

@@ -87,8 +87,12 @@ def stageOps = [TestData.func1, TestData.func2, TestData.func3]
 
 def pipeModifiers = [[[0], [0], [0]], [[0], [0], [0]], [[0], [0], [0]]]
 
+//@log workers "./Test33-"
+
 def emitter = new Emit(
-    eDetails: emitterDetails )
+    eDetails: emitterDetails,
+    logPhaseName: "emit",
+    logPropertyName: "instanceNumber" )
 
 def ofl = new OneFanList()
 
@@ -97,7 +101,9 @@ def gop = new ListGroupOfPipelineCollects( groups: workers,
     cDetails: compDetails,
     rDetails: resultDetails,
     stageOp: stageOps,
-    stageModifier : pipeModifiers)
+    stageModifier : pipeModifiers,
+    logPropertyName: "instanceNumber" ,
+    logPhaseNames: ["stage1", "stage2", "stage3", "collect"])
 
 er.finalSum = er1.finalSum + er2.finalSum + er3.finalSum
 er.dataSetCount = er1.dataSetCount + er2.dataSetCount + er3.dataSetCount
@@ -110,6 +116,7 @@ er.w2 = er1.w2 + er2.w2 + er3.w2
 er.w3 = er1.w3 + er2.w3 + er3.w3
 er.cloneOrder = er1.cloneOrder + er2.cloneOrder +er3.cloneOrder
 er.instanceOrder = er1.instanceOrder + er2.instanceOrder + er3.instanceOrder
+
 println "33: $er"
 
 assertTrue (er.finalSum == 210)
