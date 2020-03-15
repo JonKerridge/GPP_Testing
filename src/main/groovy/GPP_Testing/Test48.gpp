@@ -1,19 +1,18 @@
 package GPP_Testing
 
-import groovyParallelPatterns.CompositeDetails
-import groovyParallelPatterns.DataDetails
-import groovyParallelPatterns.ResultDetails
-import groovyParallelPatterns.connectors.spreaders.OneFanAny
-import groovyParallelPatterns.functionals.composites.AnyPipelineOfGroupCollects
-import groovyParallelPatterns.terminals.Emit
 import TestDataDefs.TestData
 import TestDataDefs.TestExtract
 import TestDataDefs.TestResult
 import TestDataDefs.TestWorker
-import static org.junit.Assert.assertTrue
+import groovyParallelPatterns.CompositeDetails
+import groovyParallelPatterns.DataDetails
+import groovyParallelPatterns.ResultDetails
+import groovyParallelPatterns.patterns.GroupOfPipelineCollectPattern
+import groovyParallelPatterns.patterns.PipelineOfGroupCollectPattern
 
-int stages = 3
-int workers = 3
+import static org.junit.Assert.assertTrue
+def stages = 3
+def workers = 3
 
 def er = new TestExtract()
 def er1 = new TestExtract()
@@ -79,25 +78,16 @@ def stageOps = [TestData.func1, TestData.func2, TestData.func3]
 
 def pipeModifiers = [[[0], [0], [0]], [[0], [0], [0]], [[0], [0], [0]]]
 
-//@log workers "./Test36-"
-
-def emitter = new Emit(
-    eDetails: emitterDetails,
-    logPhaseName: "emit",
-    logPropertyName: "instanceNumber" )
-
-def ofa = new OneFanAny(
-    destinations: workers)
-
-
-def pog = new AnyPipelineOfGroupCollects(workers: workers,
+def pog = new PipelineOfGroupCollectPattern(workers: workers,
     stages: stages,
+    eDetails: emitterDetails,
     cDetails: compDetails,
     rDetails: resultDetails,
     stageOp: stageOps,
-    stageModifier: pipeModifiers,
-    logPropertyName: "instanceNumber" ,
-    logPhaseNames: ["stage1", "stage2", "stage3", "collect"])
+    stageModifier: pipeModifiers)
+
+
+pog.run()
 
 er.finalSum = er1.finalSum + er2.finalSum + er3.finalSum
 er.dataSetCount = er1.dataSetCount + er2.dataSetCount + er3.dataSetCount
@@ -110,7 +100,7 @@ er.w2 = er1.w2 + er2.w2 + er3.w2
 er.w3 = er1.w3 + er2.w3 + er3.w3
 er.cloneOrder = er1.cloneOrder + er2.cloneOrder + er3.cloneOrder
 
-println "36: $er"
+println "48: $er"
 
 assertTrue(er.finalSum == 210)
 assertTrue(er.dataSetCount == 20)

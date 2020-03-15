@@ -1,8 +1,8 @@
 package GPP_Testing
 
-import GPP_Library.DataDetails
-import GPP_Library.ResultDetails
-import GPP_Library.patterns.DataParallelPattern
+import groovyParallelPatterns.DataDetails
+import groovyParallelPatterns.ResultDetails
+import groovyParallelPatterns.patterns.DataParallelPattern
 import TestDataDefs.TestData
 import TestDataDefs.TestExtract
 import TestDataDefs.TestResult

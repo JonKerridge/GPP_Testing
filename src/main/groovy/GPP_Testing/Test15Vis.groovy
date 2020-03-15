@@ -3,13 +3,13 @@ package GPP_Testing
 import jcsp.lang.*
 import groovyJCSP.*
  
-import GPP_Library.DataDetails
-import GPP_Library.ResultDetails
-import GPP_Library.connectors.reducers.ListMergeOne
-import GPP_Library.connectors.spreaders.OneParCastList
-import GPP_Library.functionals.groups.ListGroupList
-import GPP_Library.terminals.Collect
-import GPP_Library.terminals.Emit
+import groovyParallelPatterns.DataDetails
+import groovyParallelPatterns.ResultDetails
+import groovyParallelPatterns.connectors.reducers.ListMergeOne
+import groovyParallelPatterns.connectors.spreaders.OneParCastList
+import groovyParallelPatterns.functionals.groups.ListGroupList
+import groovyParallelPatterns.terminals.Collect
+import groovyParallelPatterns.terminals.Emit
 import TestDataDefs.TestData
 import TestDataDefs.TestExtract
 import TestDataDefs.TestResult
@@ -31,10 +31,10 @@ rFinaliseData: [er])
  
 //@log 1 "./Test15-"
 
-import GPP_Library.Logger
-import GPP_Library.LoggingVisualiser
-import GPP_Library.gppVis.Visualiser
-import GPP_Library.gppVis.Connector
+import groovyParallelPatterns.Logger
+import groovyParallelPatterns.LoggingVisualiser
+import groovyParallelPatterns.gppVis.Visualiser
+import groovyParallelPatterns.gppVis.Connector
 import javafx.application.Platform
 
 def logChan = Channel.any2one()

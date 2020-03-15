@@ -1,16 +1,16 @@
 package GPP_Testing
 
-import GPP_Library.CompositeDetails
-import GPP_Library.DataDetails
-import GPP_Library.ResultDetails
-import GPP_Library.connectors.reducers.ListFanOne
-import GPP_Library.connectors.spreaders.OneFanList
-import GPP_Library.functionals.composites.AnyPipelineOfGroupCollects
-import GPP_Library.functionals.composites.ListPipelineOfGroupCollects
-import GPP_Library.functionals.composites.ListPipelineOfGroups
-import GPP_Library.functionals.groups.ListGroupCollect
-import GPP_Library.terminals.Collect
-import GPP_Library.terminals.Emit
+import groovyParallelPatterns.CompositeDetails
+import groovyParallelPatterns.DataDetails
+import groovyParallelPatterns.ResultDetails
+import groovyParallelPatterns.connectors.reducers.ListFanOne
+import groovyParallelPatterns.connectors.spreaders.OneFanList
+import groovyParallelPatterns.functionals.composites.AnyPipelineOfGroupCollects
+import groovyParallelPatterns.functionals.composites.ListPipelineOfGroupCollects
+import groovyParallelPatterns.functionals.composites.ListPipelineOfGroups
+import groovyParallelPatterns.functionals.groups.ListGroupCollect
+import groovyParallelPatterns.terminals.Collect
+import groovyParallelPatterns.terminals.Emit
 import TestDataDefs.TestData
 import TestDataDefs.TestExtract
 import TestDataDefs.TestResult
@@ -108,7 +108,7 @@ def pog = new ListPipelineOfGroups(workers: workers,
 
 
 def collector = new ListGroupCollect(
-    workers: workers,
+    collectors: workers,
     rDetails: resultDetails,
     logPhaseName: "collect",
     logPropertyName: "instanceNumber")
@@ -123,7 +123,6 @@ er.w1 = er1.w1 + er2.w1 + er3.w1
 er.w2 = er1.w2 + er2.w2 + er3.w2
 er.w3 = er1.w3 + er2.w3 + er3.w3
 er.cloneOrder = er1.cloneOrder + er2.cloneOrder +er3.cloneOrder
-er.instanceOrder = er1.instanceOrder + er2.instanceOrder + er3.instanceOrder
 
 println "34a: $er"
 

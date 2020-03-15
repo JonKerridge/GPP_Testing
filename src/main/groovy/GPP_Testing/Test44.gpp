@@ -1,10 +1,10 @@
 package GPP_Testing
 
-import GPP_Library.DataDetails
-import GPP_Library.LocalDetails
-import GPP_Library.PipelineDetails
-import GPP_Library.ResultDetails
-import GPP_Library.patterns.TaskParallelPattern
+import groovyParallelPatterns.DataDetails
+import groovyParallelPatterns.LocalDetails
+import groovyParallelPatterns.PipelineDetails
+import groovyParallelPatterns.ResultDetails
+import groovyParallelPatterns.patterns.TaskParallelPattern
 import TestDataDefs.TestData
 import TestDataDefs.TestExtract
 import TestDataDefs.TestResult
@@ -30,19 +30,23 @@ def resultDetails = new ResultDetails(rName: TestResult.getName(),
     rFinaliseMethod: TestResult.finalise,
     rFinaliseData: [er])
 
-def pipeDetails = new PipelineDetails(stages: stages,
-    stageDetails: new LocalDetails[stages])
+def pipeDetails = new PipelineDetails(stages)
 
 for ( s in 0..< stages){
-  pipeDetails.stageDetails[s] = new LocalDetails()
-  pipeDetails.stageDetails[s].lName = TestWorker.getName()
-  pipeDetails.stageDetails[s].lInitMethod = TestWorker.init
-  pipeDetails.stageDetails[s].lFinaliseMethod = TestWorker.finalise
+  pipeDetails.insertPipelineDetails(
+      s,
+      TestWorker.getName(),
+      TestWorker.init,
+      null,
+      TestWorker.finalise,
+      null
+  )
 }
 
 pipeDetails.stageDetails[0].lInitData = [25, 10]
 pipeDetails.stageDetails[1].lInitData = [25, 100]
 pipeDetails.stageDetails[2].lInitData = [25, 200]
+
 
 def tpp = new TaskParallelPattern(
     eDetails: emitterDetails,

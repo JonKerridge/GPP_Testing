@@ -1,22 +1,19 @@
 package GPP_Testing
 
-import groovyParallelPatterns.CompositeDetails
-import groovyParallelPatterns.DataDetails
-import groovyParallelPatterns.ResultDetails
-import groovyParallelPatterns.connectors.reducers.ListFanOne
-import groovyParallelPatterns.connectors.spreaders.OneFanList
-import groovyParallelPatterns.functionals.composites.ListGroupOfPipelineCollects
-import groovyParallelPatterns.functionals.composites.ListGroupOfPipelines
-import groovyParallelPatterns.terminals.Collect
-import groovyParallelPatterns.terminals.Emit
 import TestDataDefs.TestData
 import TestDataDefs.TestExtract
 import TestDataDefs.TestResult
 import TestDataDefs.TestWorker
+import groovyParallelPatterns.CompositeDetails
+import groovyParallelPatterns.DataDetails
+import groovyParallelPatterns.ResultDetails
+import groovyParallelPatterns.patterns.GroupOfPipelineCollectPattern
+
 import static org.junit.Assert.assertTrue
 
-int stages = 3
-int workers = 3
+def stages = 3
+def workers = 3
+
 def er = new TestExtract()
 def er1 = new TestExtract()
 def er2 = new TestExtract()
@@ -50,8 +47,6 @@ resultDetails <<
         rFinaliseMethod: TestResult.finalise,
         rFinaliseData: [er3])
 
-
-
 List [][] initData = new List[workers][stages]
 initData[0][0] = [100, 0]
 initData[1][0] = [100, 0]
@@ -81,23 +76,22 @@ for ( w in 0..< workers)
         finaliseMethod,
         finalData)
 
-//println "${compDetails.toString()}"
+//        println "Result is ${compDetails.toString()}"
 
 def stageOps = [TestData.func1, TestData.func2, TestData.func3]
 
 def pipeModifiers = [[[0], [0], [0]], [[0], [0], [0]], [[0], [0], [0]]]
 
-def emitter = new Emit(
-    eDetails: emitterDetails )
-
-def ofl = new OneFanList()
-
-def gop = new ListGroupOfPipelineCollects( groups: workers,
+def gopC = new GroupOfPipelineCollectPattern(
+    groups: workers,
     stages: stages,
+    eDetails: emitterDetails,
     cDetails: compDetails,
     rDetails: resultDetails,
     stageOp: stageOps,
     stageModifier : pipeModifiers)
+
+gopC.run()
 
 er.finalSum = er1.finalSum + er2.finalSum + er3.finalSum
 er.dataSetCount = er1.dataSetCount + er2.dataSetCount + er3.dataSetCount
@@ -110,7 +104,7 @@ er.w2 = er1.w2 + er2.w2 + er3.w2
 er.w3 = er1.w3 + er2.w3 + er3.w3
 er.cloneOrder = er1.cloneOrder + er2.cloneOrder +er3.cloneOrder
 
-println "33: $er"
+println "47: $er"
 
 assertTrue (er.finalSum == 210)
 assertTrue (er.dataSetCount == 20)

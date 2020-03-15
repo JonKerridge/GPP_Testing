@@ -1,11 +1,11 @@
 package GPP_Testing
 
-import GPP_Library.CompositeDetails
-import GPP_Library.DataDetails
-import GPP_Library.ResultDetails
-import GPP_Library.connectors.spreaders.OneFanAny
-import GPP_Library.functionals.composites.AnyPipelineOfGroupCollects
-import GPP_Library.terminals.Emit
+import groovyParallelPatterns.CompositeDetails
+import groovyParallelPatterns.DataDetails
+import groovyParallelPatterns.ResultDetails
+import groovyParallelPatterns.connectors.spreaders.OneFanAny
+import groovyParallelPatterns.functionals.composites.AnyPipelineOfGroupCollects
+import groovyParallelPatterns.terminals.Emit
 import TestDataDefs.TestData
 import TestDataDefs.TestExtract
 import TestDataDefs.TestResult
@@ -103,7 +103,6 @@ er.w1 = er1.w1 + er2.w1 + er3.w1
 er.w2 = er1.w2 + er2.w2 + er3.w2
 er.w3 = er1.w3 + er2.w3 + er3.w3
 er.cloneOrder = er1.cloneOrder + er2.cloneOrder + er3.cloneOrder
-er.instanceOrder = er1.instanceOrder + er2.instanceOrder + er3.instanceOrder
 
 println "36: $er"
 

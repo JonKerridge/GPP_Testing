@@ -1,14 +1,14 @@
 package GPP_Testing
 
-import GPP_Library.DataDetails
-import GPP_Library.LocalDetails
-import GPP_Library.PipelineDetails
-import GPP_Library.ResultDetails
-import GPP_Library.connectors.reducers.*
-import GPP_Library.connectors.spreaders.*
-import GPP_Library.functionals.groups.*
-import GPP_Library.functionals.pipelines.OnePipelineCollect
-import GPP_Library.terminals.*
+import groovyParallelPatterns.DataDetails
+import groovyParallelPatterns.LocalDetails
+import groovyParallelPatterns.PipelineDetails
+import groovyParallelPatterns.ResultDetails
+import groovyParallelPatterns.connectors.reducers.*
+import groovyParallelPatterns.connectors.spreaders.*
+import groovyParallelPatterns.functionals.groups.*
+import groovyParallelPatterns.functionals.pipelines.OnePipelineCollect
+import groovyParallelPatterns.terminals.*
 import static org.junit.Assert.assertTrue
 import TestDataDefs.*
 
@@ -29,14 +29,17 @@ def resultDetails = new ResultDetails(rName: TestResult.getName(),
     rFinaliseMethod: TestResult.finalise,
     rFinaliseData: [er])
 
-def pipeDetails = new PipelineDetails(stages: stages,
-    stageDetails: new LocalDetails[stages])
+def pipeDetails = new PipelineDetails(stages)
 
 for ( s in 0..< stages){
-  pipeDetails.stageDetails[s] = new LocalDetails()
-  pipeDetails.stageDetails[s].lName = TestWorker.getName()
-  pipeDetails.stageDetails[s].lInitMethod = TestWorker.init
-  pipeDetails.stageDetails[s].lFinaliseMethod = TestWorker.finalise
+  pipeDetails.insertPipelineDetails(
+      s,
+      TestWorker.getName(),
+      TestWorker.init,
+      null,
+      TestWorker.finalise,
+      null
+  )
 }
 
 pipeDetails.stageDetails[0].lInitData = [25, 10]

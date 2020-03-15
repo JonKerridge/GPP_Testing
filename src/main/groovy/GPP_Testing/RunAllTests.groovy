@@ -47,4 +47,7 @@ evaluate(new File ("./Test43.groovy"))
 evaluate(new File ("./Test44.groovy"))
 evaluate(new File ("./Test45.groovy"))
 evaluate(new File ("./Test46.groovy"))
+evaluate(new File ("./Test47.groovy"))
+evaluate(new File ("./Test48.groovy"))
+evaluate(new File ("./Test49.groovy"))
 

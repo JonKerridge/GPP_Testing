@@ -6,8 +6,7 @@ class TestExtract {
   int finalInstance
   int maxClone
   int w1, w2, w3
-  List cloneOrder
-  List instanceOrder
+  List cloneOrder =[]
 
   String toString() {
     String s = "Final Sum = $finalSum"
@@ -15,9 +14,7 @@ class TestExtract {
     s += " final instance $finalInstance "
     s += "max clone is $maxClone ... W-values = "
     s += "w1: $w1, w2: $w2, w3: $w3"
-    s += "\n Instance Order = "
-    instanceOrder.each { s += " $it"}
-    if ( cloneOrder[0] != 0){
+    if ( ! cloneOrder.isEmpty()){
       s += "\n Clone Order = "
       cloneOrder.each { s += " $it"}
     }

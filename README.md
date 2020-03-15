@@ -2,7 +2,7 @@ This repository contains a set of testing codes of the Groovy parallel Patterns 
 
 Contact J.Kerridge@napier.ac.uk
 
-The codes are based on the JUnit tests contained in GPP_Library modified so that they can make use of the GPP_Builder program.
+The codes are based on the JUnit tests contained in groovyParallelPatterns modified so that they can make use of the GPP_Builder program.
 
 It also contains a set of scripts that allow the use of the code Visualisations that can also be built using GPP_Builder.
 

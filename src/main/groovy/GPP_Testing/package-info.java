@@ -6,7 +6,7 @@
  * The script RunAllTests will then run all the tests not as Junit tests but just
  * as a script.  This does not run the Visualised versions as these must be run individually.
  *
- * The Tests are the same as appear in GPP_Library except that they can be built
+ * The Tests are the same as appear in groovyParallelPatterns except that they can be built
  * using GPP_Builder and Visualised versions can also be created.
  *
  * <b>The scripts test the components.</b>

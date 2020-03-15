@@ -1,14 +1,14 @@
 package GPP_Testing
 
-import GPP_Library.DataDetails
-import GPP_Library.GroupDetails
-import GPP_Library.LocalDetails
-import GPP_Library.ResultDetails
-import GPP_Library.connectors.reducers.ListFanOne
-import GPP_Library.connectors.spreaders.OneFanList
-import GPP_Library.functionals.groups.ListGroupList
-import GPP_Library.terminals.Collect
-import GPP_Library.terminals.Emit
+import groovyParallelPatterns.DataDetails
+import groovyParallelPatterns.GroupDetails
+import groovyParallelPatterns.LocalDetails
+import groovyParallelPatterns.ResultDetails
+import groovyParallelPatterns.connectors.reducers.ListFanOne
+import groovyParallelPatterns.connectors.spreaders.OneFanList
+import groovyParallelPatterns.functionals.groups.ListGroupList
+import groovyParallelPatterns.terminals.Collect
+import groovyParallelPatterns.terminals.Emit
 import TestDataDefs.TestData
 import TestDataDefs.TestExtract
 import TestDataDefs.TestResult
@@ -32,35 +32,33 @@ def resultDetails = new ResultDetails(rName: TestResult.getName(),
     rFinaliseMethod: TestResult.finalise,
     rFinaliseData: [er])
 
-def group1Details  = new GroupDetails( workers : workers,
-    groupDetails: new LocalDetails[workers])
-def group2Details  = new GroupDetails( workers : workers,
-    groupDetails: new LocalDetails[workers])
-def group3Details  = new GroupDetails( workers : workers,
-    groupDetails: new LocalDetails[workers])
+def group1Details = new GroupDetails(workers)
+def group2Details = new GroupDetails(workers)
+def group3Details = new GroupDetails(workers)
 
 for ( w in 0..< workers){
-  group1Details.groupDetails[w] = new LocalDetails( lName: TestWorker.getName(),
-      lInitMethod: TestWorker.init,
-      lFinaliseMethod: TestWorker.finalise )
-  group2Details.groupDetails[w] = new LocalDetails( lName: TestWorker.getName(),
-      lInitMethod: TestWorker.init,
-      lFinaliseMethod: TestWorker.finalise )
-  group3Details.groupDetails[w] = new LocalDetails( lName: TestWorker.getName(),
-      lInitMethod: TestWorker.init,
-      lFinaliseMethod: TestWorker.finalise )
+  group1Details.insertGroupDetails(
+      w,
+      TestWorker.getName(),
+      TestWorker.init,
+      [100, 0],
+      TestWorker.finalise,
+      [])
+  group2Details.insertGroupDetails(
+      w,
+      TestWorker.getName(),
+      TestWorker.init,
+      [100, 0],
+      TestWorker.finalise,
+      [])
+  group3Details.insertGroupDetails(
+      w,
+      TestWorker.getName(),
+      TestWorker.init,
+      [100, 0],
+      TestWorker.finalise,
+      [])
 }
-group1Details.groupDetails[0].lInitData = [100, 0]
-group1Details.groupDetails[1].lInitData = [100, 0]
-group1Details.groupDetails[2].lInitData = [100, 0]
-
-group2Details.groupDetails[0].lInitData = [100, 0]
-group2Details.groupDetails[1].lInitData = [100, 0]
-group2Details.groupDetails[2].lInitData = [100, 0]
-
-group3Details.groupDetails[0].lInitData = [100, 0]
-group3Details.groupDetails[1].lInitData = [100, 0]
-group3Details.groupDetails[2].lInitData = [100, 0]
 
 
 def emitter = new Emit(
