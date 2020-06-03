@@ -1,2 +1,85 @@
 package GPP_Testing
 
+import TestDataDefs.TestData
+import TestDataDefs.SerialisedTestData
+import TestDataDefs.TestExtract
+import TestDataDefs.TestResult
+import groovyJCSP.PAR
+import groovyParallelPatterns.DataDetails
+import groovyParallelPatterns.ResultDetails
+import groovyParallelPatterns.cluster.connectors.NodeRequestingFanAny
+import groovyParallelPatterns.cluster.connectors.OneNodeRequestedList
+import groovyParallelPatterns.connectors.reducers.AnyFanOne
+import groovyParallelPatterns.functionals.groups.AnyGroupAny
+import groovyParallelPatterns.terminals.Collect
+import groovyParallelPatterns.terminals.Emit
+
+import static org.junit.Assert.assertTrue
+
+/*
+This cannot be built because the cluster builder capability
+has not yet been implemented
+*/
+
+int clusters = 2
+int workers = 3
+
+def er = new TestExtract()
+
+def emitterDetails = new DataDetails(dName: TestData.getName() ,
+    dInitMethod: TestData.totalInitialise,
+    dInitData: [20],
+    dCreateMethod: TestData.create)
+
+def resultDetails = new ResultDetails(rName: TestResult.getName(),
+    rInitMethod: TestResult.init,
+    rCollectMethod:  TestResult.collector,
+    rFinaliseMethod: TestResult.finalise,
+    rFinaliseData: [er])
+
+def emitter = new Emit(
+    eDetails: emitterDetails )
+
+def onrl = new OneNodeRequestedList()
+
+def rfa0 = new NodeRequestingFanAny( destinations: workers)
+
+def rfa1 = new NodeRequestingFanAny(destinations: workers)
+
+def aga0 = new AnyGroupAny(
+    function: SerialisedTestData.nullFunc,
+    workers: workers
+)
+
+def aga1 = new AnyGroupAny(
+    function: SerialisedTestData.nullFunc,
+    workers: workers
+)
+
+def afo0 = new AnyFanOne(
+    sources: workers
+)
+
+def afo1 = new AnyFanOne(
+    sources: workers
+)
+
+def afo = new AnyFanOne(sources: clusters)
+
+def collector = new Collect(rDetails: resultDetails)
+
+PAR testParallel = new PAR([emitter, onrl, rfa1, rfa0, aga0, aga1, afo, afo1, afo0, collector])
+testParallel.run()
+testParallel.removeAllProcesses()
+
+println "37: $er"
+
+assertTrue (er.finalSum == 210)
+assertTrue (er.dataSetCount == 20)
+assertTrue (er.finalInstance == 20)
+assertTrue (er.maxClone == 0)
+
+
+
+
+
