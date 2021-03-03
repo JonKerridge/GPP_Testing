@@ -19,10 +19,10 @@ so that interaction with the Visualisation can be observed and used.
 It is assumed that the required libraries have already been downloaded
 to the Local Maven repository.
 
-jcsp: https://github.com/CSPforJAVA/jcsp/releases/tag/1.1.8
-groovyJCSP: https://github.com/JonKerridge/groovyJCSP/releases/tag/1.1.8
-groovyParallelPatterns: https://github.com/JonKerridge/GPP_Library/releases/tag/1.1.11
-GPP_Builder: https://github.com/JonKerridge/GPP_Builder/releases/tag/1.1.11
+jcsp: https://github.com/CSPforJAVA/jcsp/releases/tag/1.1.8  
+groovyJCSP: https://github.com/JonKerridge/groovyJCSP/releases/tag/1.1.8  
+groovyParallelPatterns: https://github.com/JonKerridge/GPP_Library/releases/tag/1.1.11  
+GPP_Builder: https://github.com/JonKerridge/GPP_Builder/releases/tag/1.1.11  
 
 The repositories and dependencies used in the build.gradle file are:
 <pre>
