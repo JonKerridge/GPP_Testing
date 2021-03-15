@@ -1,13 +1,13 @@
 package GPP_Testing
 
 import jcsp.lang.*
-import groovyJCSP.*
+import groovy_jcsp.*
  
-import groovyParallelPatterns.DataDetails
-import groovyParallelPatterns.ResultDetails
-import groovyParallelPatterns.functionals.workers.Worker
-import groovyParallelPatterns.terminals.Collect
-import groovyParallelPatterns.terminals.Emit
+import groovy_parallel_patterns.DataDetails
+import groovy_parallel_patterns.ResultDetails
+import groovy_parallel_patterns.functionals.workers.Worker
+import groovy_parallel_patterns.terminals.Collect
+import groovy_parallel_patterns.terminals.Emit
 import TestDataDefs.TestData
 import TestDataDefs.TestExtract
 import TestDataDefs.TestResult

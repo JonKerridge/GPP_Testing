@@ -1,8 +1,9 @@
 package GPP_Testing
 
-import gppBuilder.GPPbuilder
+import gpp_builder.GPPbuilder
 
 def build = new GPPbuilder()
 String rootPath = "./"  // as required for use in Intellij
 
-build.runBuilder(rootPath + "Test37")
+build.runBuilder(rootPath + "Test41")
+build.runBuilder(rootPath + "Test41Vis")

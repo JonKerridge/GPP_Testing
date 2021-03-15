@@ -1,9 +1,9 @@
 package GPP_Testing
 
-import groovyParallelPatterns.DataDetails
-import groovyParallelPatterns.ResultDetails
-import groovyParallelPatterns.functionals.workers.Worker
-import groovyParallelPatterns.terminals.*
+import groovy_parallel_patterns.DataDetails
+import groovy_parallel_patterns.ResultDetails
+import groovy_parallel_patterns.functionals.workers.Worker
+import groovy_parallel_patterns.terminals.*
 import static org.junit.Assert.assertTrue
 import TestDataDefs.*
 

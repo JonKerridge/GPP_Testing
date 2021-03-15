@@ -1,12 +1,12 @@
 package GPP_Testing
 
-import groovyParallelPatterns.DataDetails
-import groovyParallelPatterns.ResultDetails
-import groovyParallelPatterns.connectors.reducers.ListMergeOne
-import groovyParallelPatterns.connectors.spreaders.OneParCastList
-import groovyParallelPatterns.functionals.groups.ListGroupList
-import groovyParallelPatterns.terminals.Collect
-import groovyParallelPatterns.terminals.Emit
+import groovy_parallel_patterns.DataDetails
+import groovy_parallel_patterns.ResultDetails
+import groovy_parallel_patterns.connectors.reducers.ListMergeOne
+import groovy_parallel_patterns.connectors.spreaders.OneParCastList
+import groovy_parallel_patterns.functionals.groups.ListGroupList
+import groovy_parallel_patterns.terminals.Collect
+import groovy_parallel_patterns.terminals.Emit
 import TestDataDefs.TestData
 import TestDataDefs.TestExtract
 import TestDataDefs.TestResult

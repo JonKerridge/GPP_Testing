@@ -1,6 +1,6 @@
 package TestDataDefs
 
-import groovyParallelPatterns.DataClass
+import groovy_parallel_patterns.DataClass
 
 //@CompileStatic
 class TestResult extends DataClass {

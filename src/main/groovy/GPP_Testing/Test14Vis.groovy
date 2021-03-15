@@ -1,15 +1,15 @@
 package GPP_Testing
 
 import jcsp.lang.*
-import groovyJCSP.*
+import groovy_jcsp.*
  
-import groovyParallelPatterns.DataDetails
-import groovyParallelPatterns.ResultDetails
-import groovyParallelPatterns.connectors.reducers.ListFanOne
-import groovyParallelPatterns.connectors.spreaders.OneParCastList
-import groovyParallelPatterns.functionals.groups.ListGroupList
-import groovyParallelPatterns.terminals.Collect
-import groovyParallelPatterns.terminals.Emit
+import groovy_parallel_patterns.DataDetails
+import groovy_parallel_patterns.ResultDetails
+import groovy_parallel_patterns.connectors.reducers.ListFanOne
+import groovy_parallel_patterns.connectors.spreaders.OneParCastList
+import groovy_parallel_patterns.functionals.groups.ListGroupList
+import groovy_parallel_patterns.terminals.Collect
+import groovy_parallel_patterns.terminals.Emit
 import TestDataDefs.TestData
 import TestDataDefs.TestExtract
 import TestDataDefs.TestResult
@@ -31,10 +31,10 @@ rFinaliseData: [er])
  
 //@log 1 "./Test14-"
 
-import groovyParallelPatterns.Logger
-import groovyParallelPatterns.LoggingVisualiser
-import groovyParallelPatterns.gppVis.Visualiser
-import groovyParallelPatterns.gppVis.Connector
+import groovy_parallel_patterns.Logger
+import groovy_parallel_patterns.LoggingVisualiser
+import groovy_parallel_patterns.gppVis.Visualiser
+import groovy_parallel_patterns.gppVis.Connector
 import javafx.application.Platform
 
 def logChan = Channel.any2one()
