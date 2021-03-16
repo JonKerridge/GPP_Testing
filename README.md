@@ -22,10 +22,10 @@ The gradle build file for the project does load the required components.
 
 The required libraries are:
 
-jcsp: cspforjava.jcsp version 1.1.9
-groovyJCSP: jonkerridge.groovy_jcsp version 1.1.9
+jcsp: cspforjava.jcsp version 1.1.9  
+groovyJCSP: jonkerridge.groovy_jcsp version 1.1.9  
 groovyParallelPatterns: jonkerridge.groovy_parallel_patterns version 1.1.12  
-GPP_Builder: jonkerridge.gpp_builder version1.1.12
+GPP_Builder: jonkerridge.gpp_builder version1.1.12  
 
 The build.gradle uses the repositories and dependencies:
 
